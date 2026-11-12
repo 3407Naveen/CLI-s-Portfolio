@@ -8,7 +8,7 @@ export const ASCII_HEADER = `
  | |\\  | (_| |\\ V /  __/  __/ | | |    ___) |
  |_| \\_|\\__,_| \\_/ \\___|\\___|_| |_|   |____/ 
                                              
-  MERN ENGINEER | AIOT & ML EXPLORER
+  SDE & AI Engineer
 `;
 
 export const ASCII_SKILLS = `
