@@ -1,52 +1,75 @@
 import { GoogleGenAI } from "@google/genai";
-import { PROJECTS, SKILLS, TIMELINE } from '../constants';
+import { PROFILE } from '../data/profile';
+import { SKILL_CATEGORIES } from '../data/skills';
+import { EXPERIENCES } from '../data/experience';
+import { PROJECTS } from '../data/projects';
+import { INITIATIVES } from '../data/leadership';
+import { ACHIEVEMENTS, EDUCATION, CERTIFICATIONS, CURRENTLY_BUILDING } from '../data/achievements';
 
 let genAI: GoogleGenAI | null = null;
 
-// Initialize Gemini safely
 if (process.env.API_KEY) {
   genAI = new GoogleGenAI({ apiKey: process.env.API_KEY });
 }
 
 export const askGemini = async (question: string): Promise<string> => {
   if (!genAI) {
-    return "Error: AI Interface Offline. API_KEY missing in environment.";
+    return "NAVEEN_OS AI: Interface offline. API_KEY not configured in environment.";
   }
 
-  // Construct a context string from our portfolio data
   const context = `
-    You are an AI assistant embedded in a CLI portfolio for a Creative Developer.
-    
-    Here is the developer's data:
-    
-    SKILLS:
-    ${JSON.stringify(SKILLS.map(s => `${s.name} (${s.level}/100): ${s.description}`))}
-    
-    PROJECTS:
-    ${JSON.stringify(Object.values(PROJECTS).map(p => ({ name: p.name, desc: p.description, tech: p.tech })))}
-    
-    CAREER TIMELINE:
-    ${JSON.stringify(TIMELINE)}
+You are NAVEEN_OS AI Assistant, embedded in a CLI-style developer portfolio for Naveen S.
 
-    User Question: "${question}"
+PROFILE:
+Name: ${PROFILE.name}
+Title: ${PROFILE.title}
+Headline: ${PROFILE.headline}
+Location: ${PROFILE.location}
+Summary: ${PROFILE.summary}
 
-    Instructions:
-    - Answer as if you are the system interface or a helpful holographic assistant.
-    - Keep the answer concise (under 100 words).
-    - Use technical but accessible language.
-    - Do not mention you are Gemini or Google AI. You are "DevCLI AI".
-    - If the question is unrelated to the portfolio, politely redirect to the developer's work.
-  `;
+SKILLS:
+${SKILL_CATEGORIES.map(c => `${c.name}: ${c.items.join(', ')}`).join('\n')}
+
+EXPERIENCE:
+${EXPERIENCES.map(e => `${e.position} at ${e.company} (${e.duration}): ${e.highlights.join('; ')}`).join('\n')}
+
+PROJECTS:
+${Object.values(PROJECTS).map(p => `${p.fullName}: ${p.description} [${p.tech.join(', ')}]`).join('\n')}
+
+LEADERSHIP & INITIATIVES:
+${Object.values(INITIATIVES).map(i => `${i.name} - ${i.position}: ${i.description}`).join('\n')}
+
+ACHIEVEMENTS:
+${ACHIEVEMENTS.map(a => `${a.title}: ${a.detail}`).join('\n')}
+
+EDUCATION:
+${EDUCATION.map(e => `${e.degree} - ${e.institution} (${e.duration}) ${e.score}`).join('\n')}
+
+CERTIFICATIONS:
+${CERTIFICATIONS.map(c => `${c.name} - ${c.issuer}`).join('\n')}
+
+CURRENTLY BUILDING:
+${CURRENTLY_BUILDING.map(c => `${c.name}: ${c.description} [${c.status}]`).join('\n')}
+
+User Question: "${question}"
+
+Instructions:
+- Answer as NAVEEN_OS AI Assistant, the portfolio's built-in intelligence.
+- Keep answers concise (under 120 words).
+- Use technical but accessible language.
+- Reference actual portfolio data when relevant.
+- If the question is unrelated, politely redirect to Naveen's work and capabilities.
+- Do not mention you are Gemini or Google AI.
+`;
 
   try {
     const response = await genAI.models.generateContent({
       model: "gemini-2.5-flash",
       contents: context,
     });
-
-    return response.text || "System: No response data received.";
+    return response.text || "NAVEEN_OS AI: No response data received.";
   } catch (error: any) {
-    console.error("Gemini Error:", error);
-    return "System Error: Connection to Neural Link failed. Please try again later.";
+    console.error("AI Error:", error);
+    return "NAVEEN_OS AI: Connection error. Please try again later.";
   }
 };

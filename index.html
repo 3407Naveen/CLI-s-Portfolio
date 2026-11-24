@@ -3,7 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>DevCLI Portfolio</title>
+    <title>Naveen S. | Developer Portfolio</title>
+    <meta name="description" content="Naveen S. — Software Developer, Applied AI Engineer, Backend Development. Building intelligent applications, scalable software systems and products that solve real-world problems." />
+    <meta property="og:title" content="Naveen S. | Developer Portfolio" />
+    <meta property="og:description" content="Software Developer | Applied AI Engineer | Backend Development — Interactive CLI Portfolio" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://cli-portfolio-tan.vercel.app/" />
+    <meta name="theme-color" content="#00ff00" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -25,6 +32,7 @@
             animation: {
               'blink': 'blink 1s step-end infinite',
               'scanline': 'scanline 8s linear infinite',
+              'fadeIn': 'fadeIn 0.3s ease-out',
             },
             keyframes: {
               blink: {
@@ -34,6 +42,10 @@
               scanline: {
                 '0%': { transform: 'translateY(-100%)' },
                 '100%': { transform: 'translateY(100%)' },
+              },
+              fadeIn: {
+                '0%': { opacity: '0', transform: 'translateY(4px)' },
+                '100%': { opacity: '1', transform: 'translateY(0)' },
               }
             }
           }
@@ -41,32 +53,38 @@
       }
     </script>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
       
       body {
         background-color: #000;
         overflow: hidden;
+        margin: 0;
+        padding: 0;
       }
 
       .crt-overlay {
-        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-        background-size: 100% 2px, 3px 100%;
+        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.12) 50%);
+        background-size: 100% 3px;
         pointer-events: none;
       }
 
-      /* Custom Scrollbar for Terminal */
       ::-webkit-scrollbar {
-        width: 10px;
+        width: 8px;
       }
       ::-webkit-scrollbar-track {
-        background: #111;
+        background: #0c0c0c;
       }
       ::-webkit-scrollbar-thumb {
-        background: #333;
-        border: 1px solid #000;
+        background: #262626;
+        border-radius: 4px;
+        border: 1px solid #1a1a1a;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #555;
+        background: #404040;
+      }
+
+      .terminal-glow {
+        text-shadow: 0 0 2px currentColor;
       }
     </style>
   <script type="importmap">
